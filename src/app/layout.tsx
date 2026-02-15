@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Header } from "./components/header/Header";
 
 export const metadata: Metadata = {
   title: "IT Jobs",
@@ -16,6 +17,7 @@ export default function RootLayout({
       <body
         suppressHydrationWarning 
       >
+        <Header />
         {children}
       </body>
     </html>
