@@ -28,24 +28,16 @@ export const Header = () => {
             <div className="inline-flex items-center gap-x-[5px] font-[600] sm:text-[16px] text-[12px] text-white relative group/sub-1">
               {/* Chưa đăng nhập */}
               
-              {/* <Link href="#" className="">
+              <Link href="/user/login" className="">
                 Đăng nhập
               </Link>
               <span className="">/</span>
-              <Link href="#" className="">
+              <Link href="/user/register" className="">
                 Đăng ký
-              </Link> */}
-              {/* Chưa đăng nhập */}
-              {/* <Link href="#" className="">
-                Đăng Nhập
               </Link>
-              <span className="">/</span>
-              <Link href="#" className="">
-                Đăng Ký
-              </Link> */}
 
               {/* Đã đăng nhập */}
-              <Link href="#" className="">
+              {/* <Link href="#" className="">
                 LG Elect...
               </Link>
               <ul className="absolute top-[100%] right-[0px] w-[200px] bg-[#000065] hidden group-hover/sub-1:block">
@@ -69,8 +61,8 @@ export const Header = () => {
                     Đăng xuất
                   </Link>
                 </li>
-              </ul>
-            </div>
+              </ul>*/}
+            </div> 
             {/* Button Menu Mobile */}
             <button 
               onClick={handleShowMenu}
