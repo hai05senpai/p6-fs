@@ -6,8 +6,6 @@ export const HeaderMenu = (props: {
 }) => {
   const { showMenu } = props;
 
-  console.log(showMenu);
-
   return (
     <>
       <nav className={"lg:block " + (showMenu ? "fixed top-0 left-0 w-[280px] h-[100vh] z-[999] bg-[#000065]" : "hidden")}>
