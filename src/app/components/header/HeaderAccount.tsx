@@ -1,9 +1,24 @@
 import { useAuth } from "@/hooks/useAuth"
 import Link from "next/link"
+import { useRouter } from "next/navigation";
 
 export const HeaderAccount = () => {
   const { isLogin, infoUser } = useAuth();
-  console.log(infoUser);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/logout`, {
+      credentials: 'include', // Gửi cookie cùng với yêu cầu
+    })
+      .then(res => res.json())
+      .then(data => {
+        if(data.code == "success") {
+          router.push('/user/login');
+        } else {
+          alert("Đăng xuất thất bại");
+        }
+      })
+  }
   
   return (
     <>
@@ -24,10 +39,8 @@ export const HeaderAccount = () => {
               Quản lý CV đã gửi
             </Link>
           </li>
-          <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2">
-            <Link href="" className="text-white font-[600] text-[16px]">
-              Đăng xuất
-            </Link>
+          <li className="py-[10px] px-[16px] rounded-[4px] flex items-center justify-between hover:bg-[#000096] relative group/sub-2 cursor-pointer" onClick={handleLogout}>
+            Đăng xuất
           </li>
         </ul>
         </>) : (<>
