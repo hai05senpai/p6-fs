@@ -18,6 +18,7 @@ registerPlugin(
 export const FormProfile = () => {
   const { infoUser } = useAuth();
   const [avatars, setAvatars] = useState<any[]>([]);
+  const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
     if(infoUser) {
@@ -58,12 +59,22 @@ export const FormProfile = () => {
             errorMessage: 'Email không đúng định dạng!',
           },
         ])
+        .onFail(() => {
+          setIsValid(false);
+        })
+        .onSuccess(() => {
+          setIsValid(true);
+        })
         
     }
   }, [infoUser]);
 
   // Hàm xử lý submit form
   const handleSubmit = (event: any) => {
+    if(!isValid) {
+      toast.error("Vui lòng điền đầy đủ thông tin theo yêu cầu!");
+      return;
+    }
     const fullName = event.target.fullName.value;
     const email = event.target.email.value;
     const phone = event.target.phone.value;
