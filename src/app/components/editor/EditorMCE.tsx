@@ -3,13 +3,15 @@ import { Editor } from '@tinymce/tinymce-react';
 
 export const EditorMCE = (props: {
   editorRef: any,
-  value?: string
+  value?: string,
+  id?: string
 }) => {
-  const { editorRef, value="" } = props;
+  const { editorRef, value="", id="" } = props;
 
   return (
     <>
       <Editor 
+        id={id}
         apiKey={process.env.NEXT_PUBLIC_API_TINYMCE_KEY}
         onInit={ (_evt, editor) => editorRef.current = editor }
         initialValue={value}
@@ -24,7 +26,7 @@ export const EditorMCE = (props: {
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
             'removeformat | help',
-          images_upload_url: `${process.env.NEXT_PUBLIC_API_URL}/upload/image`
+          images_upload_url: `${process.env.NEXT_PUBLIC_API_URL}/upload/image`,
         }}
       />
     </>
