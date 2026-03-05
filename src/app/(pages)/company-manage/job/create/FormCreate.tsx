@@ -8,6 +8,8 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import { Toaster, toast } from 'sonner';
+import { workingFromOptions } from "@/config/workingFrom";
+import { positionList } from "@/config/positionList";
 
 // Đăng ký plugin
 registerPlugin(
@@ -152,12 +154,9 @@ export const FormCreate = () => {
             id="position" 
             className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black"
           >
-            <option value="Intern">Intern</option>
-            <option value="Fresher">Fresher</option>
-            <option value="Junior">Junior</option>
-            <option value="Middle">Middle</option>
-            <option value="Senior">Senior</option>
-            <option value="Manager">Manager</option>
+            {positionList.map((option, index) => (
+              <option key={index} value={option.value}>{option.label}</option>
+            ))}
           </select>
         </div>
         <div className="">
@@ -165,13 +164,13 @@ export const FormCreate = () => {
             Hình thức làm việc *
           </label>
           <select 
-            name="workingForm" 
-            id="workingForm" 
+            name="workingFrom" 
+            id="workingFrom" 
             className="w-[100%] h-[46px] border border-[#DEDEDE] rounded-[4px] py-[14px] px-[20px] font-[500] text-[14px] text-black"
           >
-            <option value="office">Tại văn phòng</option>
-            <option value="remote">Làm từ xa</option>
-            <option value="flexible">Linh hoạt</option>
+            {workingFromOptions.map((option, index) => (
+              <option key={index} value={option.value}>{option.label}</option>
+            ))}
           </select>
         </div>
         <div className="sm:col-span-2">
