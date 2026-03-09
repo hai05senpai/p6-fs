@@ -6,9 +6,11 @@ import { FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 
 export const JobList = () => {
   const [jobList, setJobList] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/job/list`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/job/list?page=${page}`, {
       method: "GET",
       credentials: "include", // Gửi kèm cookie
     })
@@ -16,12 +18,17 @@ export const JobList = () => {
       .then(data => {
         if(data.code == "success") {
           setJobList(data.jobs);
-          console.log(data);
+          setTotalPage(data.totalPage);
         }
       })
-  }, []);
+  }, [page]);
 
   
+  const handlePagination = (event: any) => {
+    const value = event.target.value;
+    setPage(parseInt(value));
+  }
+
   return (
     <>
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
@@ -89,6 +96,18 @@ export const JobList = () => {
             </div>
           )
         })}
+      </div>
+
+      <div className="mt-[30px]">
+        <select 
+          name="" 
+          className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]"
+          onChange={handlePagination}
+        >
+          {Array(totalPage).fill("").map((item, index) => (
+            <option key={index} value={index+1}>Trang {index+1}</option>
+          ))}
+        </select>
       </div>
     </>
   )

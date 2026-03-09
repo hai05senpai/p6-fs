@@ -62,7 +62,7 @@ export const FormCreate = () => {
       const salaryMin = event.target.salaryMin.value;
       const salaryMax = event.target.salaryMax.value;
       const position = event.target.position.value;
-      const workingForm = event.target.workingForm.value;
+      const workingFrom = event.target.workingFrom.value;
       const technologies = event.target.technologies.value;
       let description = "";
       if (editorRef.current) {
@@ -75,7 +75,7 @@ export const FormCreate = () => {
       formData.append("salaryMin", salaryMin);
       formData.append("salaryMax", salaryMax);
       formData.append("position", position);
-      formData.append("workingForm", workingForm);
+      formData.append("workingFrom", workingFrom);
       formData.append("technologies", technologies);
       formData.append("description", description);
 
