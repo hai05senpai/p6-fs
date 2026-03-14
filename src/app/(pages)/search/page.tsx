@@ -1,53 +1,13 @@
 import { Section1 } from "../../components/section1/Section1";
-import { CardJobItem } from "@/app/components/card/CardJobItem";
+
+import { SearchContainer } from "./SearchContainer";
 
 export default function SearchPage() {
   return (
     <>
       <Section1 />
       {/* Section 3: Kết quả tìm kiếm */}
-      <div className="py-[60px]">
-        <div className="container mx-auto px-[16px]">
-          <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
-            76 việc làm <span className="text-[#0088FF]">reactjs</span>
-          </h2>
-          <div 
-            className="bg-white rounded-[8px] py-[10px] px-[20px] mb-[30px] flex flex-wrap gap-[12px]"
-            style={{
-              boxShadow: "0px 4px 20px 0px #0000000F"
-            }}
-            >
-            <select name="" className="border-[1px] border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
-              <option value="">Cấp bậc</option>
-              <option value="">Intern</option>
-              <option value="">Fresher</option>
-              <option value="">Junior</option>
-              <option value="">Middle</option>
-              <option value="">Senior</option>
-              <option value="">Manager</option>
-            </select>
-            <select name="" className="border-[1px] border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
-              <option value="">Hình thức làm việc</option>
-              <option value="">Tại văn phòng</option>
-              <option value="">Làm từ xa</option>
-              <option value="">Linh hoạt</option>
-            </select>
-          </div>
-          <div className="mb-[30px] grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-[20px]">
-            <CardJobItem />
-            <CardJobItem />
-            <CardJobItem />
-          </div>
-          {/* Phân trang */}
-          <div className="mt-[30px]">
-            <select name="" className="border-[1px] border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]">
-              <option value="">Trang 1</option>
-              <option value="">Trang 2</option>
-              <option value="">Trang 3</option>
-            </select>
-          </div>
-        </div>
-      </div>
+      <SearchContainer />
       {/* End Section 3 */}
     </>
   );

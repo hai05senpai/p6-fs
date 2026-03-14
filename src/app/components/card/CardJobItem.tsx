@@ -1,11 +1,17 @@
+import { workingFromOptions } from "@/config/workingFrom";
 import Link from "next/link"
 import { FaBriefcase, FaLocationDot, FaUserTie } from "react-icons/fa6"
 
-export const CardJobItem = () => {
+export const CardJobItem = (props: {
+  item: any
+}) => {
+  const { item } = props;
+  const workingFromLabel = workingFromOptions.find(option => option.value === item.workingFrom)?.label || "";
+
   return (
     <>
       <Link 
-        href="" 
+        href={`/job/detail/${item.id}`}
         className="border border-[#DEDEDE] rounded-[8px] flex flex-col relative truncate"
         style={{
           background: "linear-gradient(180deg, #F6F6F6 2.38%, #FFFFFF 70.43%)"
@@ -23,39 +29,38 @@ export const CardJobItem = () => {
           }}
         >
           <img 
-            src="/assets/images/demo-company-1.png" 
-            alt="Frontend Engineer (ReactJS)"
+            src={item.companyLogo}
+            alt={item.title}
             className="w-[100%] h-[100%] object-contain"
           />
         </div>
         <h3 className="mt-[20px] mx-[16px] font-[700] text-[18px] text-[#121212] text-center flex-1 whitespace-normal line-clamp-2">
-          Frontend Engineer (ReactJS)
+          {item.title}
         </h3>
         <div className="mt-[6px] text-center font-[400] text-[14px] text-[#121212]">
-          LG CNS Việt Nam
+          {item.companyName}
         </div>
         <div className="mt-[12px] text-center font-[600] text-[16px] text-[#0088FF]">
-          1.000$ - 1.500$
+          {item.salaryMin.toLocaleString("vi-VN")}$ - {item.salaryMax.toLocaleString("vi-VN")}$
         </div>
         <div className="mt-[6px] flex justify-center items-center gap-[8px] font-[400] text-[14px] text-[#121212]">
-          <FaUserTie className="text-[16px]" /> Fresher
+          <FaUserTie className="text-[16px]" /> {item.position}
         </div>
         <div className="mt-[6px] flex justify-center items-center gap-[8px] font-[400] text-[14px] text-[#121212]">
-          <FaBriefcase className="text-[16px]" /> Tại văn phòng
+          <FaBriefcase className="text-[16px]" /> {workingFromLabel}
         </div>
         <div className="mt-[6px] flex justify-center items-center gap-[8px] font-[400] text-[14px] text-[#121212]">
-          <FaLocationDot className="text-[16px]" /> Ha Noi
+          <FaLocationDot className="text-[16px]" /> {item.cityName}
         </div>
         <div className="mt-[12px] mb-[20px] mx-[16px] flex flex-wrap justify-center gap-[8px]">
-          <div className="border border-[#DEDEDE] rounded-[20px] py-[6px] px-[16px] font-[400] text-[12px] text-[#414042]">
-            ReactJS
-          </div>
-          <div className="border border-[#DEDEDE] rounded-[20px] py-[6px] px-[16px] font-[400] text-[12px] text-[#414042]">
-            NextJS
-          </div>
-          <div className="border border-[#DEDEDE] rounded-[20px] py-[6px] px-[16px] font-[400] text-[12px] text-[#414042]">
-            Javascript
-          </div>
+          {item.technologies.map((tech: string, index: number) => (
+            <div 
+              key={index}
+              className="border border-[#DEDEDE] rounded-[20px] py-[6px] px-[16px] font-[400] text-[12px] text-[#414042]"
+            >
+              {tech}
+            </div>
+          ))}
         </div>
       </Link>
     </>
