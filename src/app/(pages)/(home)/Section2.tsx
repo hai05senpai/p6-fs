@@ -15,8 +15,6 @@ export const Section2 = () => {
       })
   }, []);
 
-  console.log(companyList);
-
   return (
     <>
       <div className="py-[60px]">

@@ -12,18 +12,21 @@ export const SearchContainer = () => {
   const keyword = searchParams.get("keyword") || "";
   const position = searchParams.get("position") || "";
   const workingFrom = searchParams.get("workingFrom") || "";
+  const page = searchParams.get("page") || "1";
   const [jobList, setJobList] = useState<any[]>([]);
+  const [totalPage, setTotalPage] = useState();
   
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${language}&city=${city}
-    &company=${company}&keyword=${keyword}&position=${position}&workingFrom=${workingFrom}`)
+    &company=${company}&keyword=${keyword}&position=${position}&workingFrom=${workingFrom}&page=${page}`)
       .then(res => res.json())
       .then(data => {
         if(data.code == "success") {
           setJobList(data.jobs);
+          setTotalPage(data.totalPage);
         }
       })
-  }, [language, city, company, keyword, position, workingFrom]);
+  }, [language, city, company, keyword, position, workingFrom, page]);
 
   const handleFilterPosition = (event: any) => {
     const position = event.target.value;
@@ -43,6 +46,17 @@ export const SearchContainer = () => {
       params.set("workingFrom", workingFrom);
     } else {
       params.delete("workingFrom");
+    }
+    router.push(`?${params.toString()}`);
+  }
+
+  const handlePagination = (event: any) => {
+    const page = event.target.value;
+    const params = new URLSearchParams(searchParams.toString());
+    if(page) {
+      params.set("page", page);
+    } else {
+      params.delete("page");
     }
     router.push(`?${params.toString()}`);
   }
@@ -94,14 +108,22 @@ export const SearchContainer = () => {
               />
             ))}
           </div>
-          {/* Phân trang */}
-          <div className="mt-[30px]">
-            <select name="" className="border-[1px] border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]">
-              <option value="">Trang 1</option>
-              <option value="">Trang 2</option>
-              <option value="">Trang 3</option>
-            </select>
-          </div>
+          {totalPage && (
+            <>
+              {/* Phân trang */}
+              <div className="mt-[30px]">
+                <select 
+                  onChange={handlePagination}
+                  className="border-[1px] border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042]"
+                  defaultValue={page}
+                >
+                  {Array(totalPage).fill("").map((item, index) => (
+                    <option key={index} value={index+1}>Trang {index+1}</option>
+                  ))}
+                </select>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
