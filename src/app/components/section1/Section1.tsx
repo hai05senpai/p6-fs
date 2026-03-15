@@ -1,10 +1,20 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 export const Section1 = () => {
+  const searchParams = useSearchParams();
+  const cityFromParams = searchParams.get("city") || "";
   const router = useRouter();
+
+  const [city, setCity] = useState(cityFromParams);
+
+  useEffect(() => {
+    setCity(cityFromParams);
+  }, [cityFromParams]);
+
   const handleSearch = (event: any) => {
     event.preventDefault();
     const city = event.target.city.value;
@@ -23,7 +33,12 @@ export const Section1 = () => {
             887 Việc Làm IT cho Developer "Chất"
           </h1>
           <form action="" onSubmit={handleSearch} className="flex flex-wrap gap-y-[12px] gap-x-[15px] mb-[30px]">
-            <select name="city" id="" className="bg-white md:w-[240px] w-[100%] h-[56px] rounded-[4px] px-[20px] font-[500] text-[16px] text-[#121212]">
+            <select 
+              name="city" 
+              className="bg-white md:w-[240px] w-[100%] h-[56px] rounded-[4px] px-[20px] font-[500] text-[16px] text-[#121212]"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            >
               <option value="">Tất cả thành phố</option>
               <option value="Hà Nội">Hà Nội</option>
               <option value="Đà Nẵng">Đà Nẵng</option>
