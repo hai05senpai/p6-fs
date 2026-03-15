@@ -1,18 +1,21 @@
 "use client";
 import { CardJobItem } from "@/app/components/card/CardJobItem";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const SearchContainer = () => {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const language = searchParams.get("language") || "";
   const city = searchParams.get("city") || "";
   const company = searchParams.get("company") || "";
   const keyword = searchParams.get("keyword") || "";
+  const position = searchParams.get("position") || "";
   const [jobList, setJobList] = useState<any[]>([]);
   
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${language}&city=${city}&company=${company}&keyword=${keyword}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/search?language=${language}&city=${city}
+    &company=${company}&keyword=${keyword}&position=${position}`)
       .then(res => res.json())
       .then(data => {
         if(data.code == "success") {
@@ -21,14 +24,23 @@ export const SearchContainer = () => {
       })
   }, [language, city, company]);
 
-  console.log("jobList: ", jobList);
+  const handleFilterPosition = (event: any) => {
+    const position = event.target.value;
+    const params = new URLSearchParams(searchParams.toString());
+    if(position) {
+      params.set("position", position);
+    } else {
+      params.delete("position");
+    }
+    router.push(`?${params.toString()}`);
+  }
 
   return (
     <>
       <div className="py-[60px]">
         <div className="container mx-auto px-[16px]">
           <h2 className="font-[700] text-[28px] text-[#121212] mb-[30px]">
-            {jobList.length} việc làm <span className="text-[#0088FF]">{language} {city} {company} {keyword}</span>
+            {jobList.length} việc làm <span className="text-[#0088FF]">{language} {city} {company} {keyword} {position}</span>
           </h2>
           <div 
             className="bg-white rounded-[8px] py-[10px] px-[20px] mb-[30px] flex flex-wrap gap-[12px]"
@@ -36,14 +48,19 @@ export const SearchContainer = () => {
               boxShadow: "0px 4px 20px 0px #0000000F"
             }}
             >
-            <select name="" className="border-[1px] border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
+            <select 
+              name="" 
+              className="border-[1px] border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]"
+              onChange={handleFilterPosition}
+              defaultValue={position}
+            >
               <option value="">Cấp bậc</option>
-              <option value="">Intern</option>
-              <option value="">Fresher</option>
-              <option value="">Junior</option>
-              <option value="">Middle</option>
-              <option value="">Senior</option>
-              <option value="">Manager</option>
+              <option value="Intern">Intern</option>
+              <option value="Fresher">Fresher</option>
+              <option value="Junior">Junior</option>
+              <option value="Middle">Middle</option>
+              <option value="Senior">Senior</option>
+              <option value="Manager">Manager</option>
             </select>
             <select name="" className="border-[1px] border-[#DEDEDE] rounded-[20px] h-[36px] px-[18px] font-[400] text-[16px] text-[#414042]">
               <option value="">Hình thức làm việc</option>
