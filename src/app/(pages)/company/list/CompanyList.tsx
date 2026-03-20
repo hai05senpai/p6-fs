@@ -4,16 +4,24 @@ import { CardCompanyItem } from "@/app/components/card/CardCompanyItem";
 
 export const CompanyList = () => {
   const [companyList, setCompanyList] = useState<any[]>([]);
+  const [totalPage, setTotalPage] = useState(0);
+  const [page, setPage] = useState(1);
   
-    useEffect(() => {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/list?limit=9`)
-        .then((res) => res.json())
-        .then((data) => {
-          if(data.code === "success"){
-            setCompanyList(data.companyList);
-          }
-        })
-    }, []);
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/company/list?limit=2&page=${page}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if(data.code === "success"){
+          setCompanyList(data.companyList);
+          setTotalPage(data.totalPage);
+        }
+      })
+  }, [page]);
+
+  const handlePagination = (event: any) => {
+    const value = event.target.value;
+    setPage(parseInt(value));
+  }
 
   return (
     <>
@@ -27,13 +35,21 @@ export const CompanyList = () => {
         ))}
       </div>
 
-      <div className="mt-[30px]">
-        <select name="" className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042] outline-none">
-          <option value="">Trang 1</option>
-          <option value="">Trang 2</option>
-          <option value="">Trang 3</option>
-        </select>
-      </div>
+      {totalPage > 1 && (
+        <>
+          <div className="mt-[30px]">
+            <select 
+              name="" 
+              className="border border-[#DEDEDE] rounded-[8px] py-[12px] px-[18px] font-[400] text-[16px] text-[#414042] outline-none"
+              onChange={handlePagination}
+            >
+              {Array(totalPage).fill("").map((_, index)=> (
+                <option key={index} value={index+1}>Trang {index+1}</option>
+              ))}
+            </select>
+          </div>
+        </>
+      )}
     </>
   )
 }
