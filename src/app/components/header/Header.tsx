@@ -15,7 +15,7 @@ export const Header = () => {
   return (
     <>
       {/* Header */}
-      <header className="bg-[#000071] py-[15px]">
+      <header className="bg-[#000071] py-[15px] relative z-[999]">
         <div className="container mx-auto px-[16px]">
           {/* Wrap */}
           <div className="flex items-center justify-between">
